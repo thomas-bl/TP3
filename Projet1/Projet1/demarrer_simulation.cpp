@@ -105,7 +105,7 @@ int main(void){
     if(max_amperes != INT_MIN){
 
         // On obtient un boîte vide.
-        boite = obtenir_boite_neuve(max_amperes);
+        boite = *obtenir_boite_neuve(max_amperes);
 
         // Remplit la boîte avec quelques disjoncteurs
         // selon les constantes POURC_REMPLI et POURC_TENSION_ENTREE.
@@ -256,28 +256,5 @@ void effectuer_tache(char choix, t_boite* boite){
 
 
 
-void vider_boite(t_boite* boite) {
 
 
-/*Stratégie : on parcourt le tableau de disjoncteurs, s'il y en a un 
-* à la case actuelle, on le supprime en appelant le sous-programme
-* retirer_disjoncteur.
-*/
-
-	//itérateurs
-	int L;
-	int C;
-
-
-	for (L = 0; L < NB_LIGNES_MAX; L++) {
-
-		for (C = 0; C < NB_COLONNES; C++) {
-
-			if (boite->tab_disjoncteurs[L][C]) {
-
-				retirer_disjoncteur(boite);
-
-			}
-		}
-	}
-}

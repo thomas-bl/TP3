@@ -99,4 +99,16 @@ t_disjoncteur* obtenir_disjoncteur(const t_boite* boite,
 
 //sous programme qui retire le disjoncteur aux coordonnées passées en argument
 void retirer_un_disjoncteur(t_boite* boite, t_coord* coor);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+//modif SEB
+///////////////////////////////////////////////////////////////////////////////////////
+void* installer_disjoncteur(t_boite* boite,t_coord* c,t_disjoncteur* disjoncteur);
+
+
+
+
 #endif

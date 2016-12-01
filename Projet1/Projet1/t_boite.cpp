@@ -132,5 +132,17 @@ void retirer_un_disjoncteur(t_boite* boite, t_coord* coor) {
 	/*Stratégie :  */
 
 
-	boite->tab_disjoncteurs
+	boite->tab_disjoncteurs;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+//Modif Seb
+//////////////////////////////////////////////////////////////////////////////////////////
+void* installer_disjoncteur(t_boite* boite,t_coord* c,t_disjoncteur* disjoncteur){
+
+	//à écrire
+return EXIT_SUCCESS;
+}
+
+
+

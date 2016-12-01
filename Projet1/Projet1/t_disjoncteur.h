@@ -23,7 +23,8 @@
 //pour gérer les FILE*
 #include <stdio.h>
 
-
+//Pour les cas impossibles
+#include <assert.h>
 
 //--------------CONSTANTES LOCALES-------------------------
 
@@ -106,8 +107,23 @@ static t_appareil lire_appareil(t_liste* liste);
 * ET son état
 */
 
-void ajouter_un_appareil(t_disjoncteur* disjoncteur, 
-	t_chaine categorie, t_chaine emplacement,
-	double ampere, double tension);
+void ajouter_appareil(t_disjoncteur* disjoncteur, 
+	t_appareil* appareil);
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//Prototypes Seb
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+t_appareil** obtenir_appareils(t_disjoncteur* disjoncteur,int *nb_appareils);
+
+
+
+void* vider_appareil(t_disjoncteur* disjoncteur);
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif

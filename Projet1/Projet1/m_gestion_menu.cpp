@@ -1,3 +1,5 @@
+//SEB
+
 /*
 * Module pour regrouper les sous-programmes qui gère les
 * options du menu du tp3 présenté dans Demarrer_simulation 
@@ -26,28 +28,30 @@
 #include "t_disjoncteur.h" // 
 
 
-void retirer_disjoncteur(t_boite* boite){
+void retirer_disjoncteur(t_boite* boite) {
 
-    t_coord c;
+	t_coord c;
 
-    cleardevice();
+	cleardevice();
 
-    // Les données de position et de taille sont arbitraires et n'ont pas 
-    // été mises en constantes.
-    boite_message("Quel disjoncteur", 500,200, 100,30, WHITE, WHITE);
+	char* mess = "Quel disjoncteur ?";
 
-    obtenir_position_valide(500,250,
-        &c.col, &c.lig, 
-        HAUT_CENTRE);
+	boite_message(mess,
+		DIALOGUE_X, DIALOGUE_Y,
+		textwidth(mess), textheight(mess),
+		WHITE, WHITE);
 
-    // Si l'utilisateur n'as pas annulé.
-    if(c.col != INT_MIN && c.lig != INT_MIN){
+	obtenir_position_valide(DIALOGUE_X, DIALOGUE_Y + GAP_Y,
+		&c.col, &c.lig,
+		HAUT_CENTRE);
 
-        retirer_un_disjoncteur(boite, &c);
-    }
+	// Si l'utilisateur n'as pas annulé.
+	if (c.col != INT_MIN && c.lig != INT_MIN) {
+
+		retirer_un_disjoncteur(boite, &c);
+	}
 
 }
-
 
 // Déclenche l'ajout d'un disjoncteur.
 void ajouter_disjoncteur(t_boite* boite){
@@ -107,7 +111,7 @@ void sauvegarder_appareil(t_disjoncteur* d, FILE* fic){
     int  nb_appareils;
                 
     // On obtient un tableau avec les références vers les appareils.
-    t_appareil** tab_appareils = obtenir_appareils(d, &nb_appareils);
+    t_appareil** tab_appareils = obtenir_appareils(d,&nb_appareils);
     
     // D'abord il faut retenirl e nombre d'appareils.
     fwrite(&nb_appareils,sizeof(int),1,fic);
@@ -259,7 +263,8 @@ void recuperer_boite(t_boite* boite){
                     fread(boite->tab_disjoncteurs[i][j],sizeof(t_disjoncteur),1,fic);
 
                     // Important de réinitialiser la liste et la demande.
-                    init_liste(&boite->tab_disjoncteurs[i][j]->liste_appareils);
+                    init_liste(boite->tab_disjoncteurs[i][j]->ref_appareils,
+								obtenir_nb_elements(boite->tab_disjoncteurs[i][j]->ref_appareils));
                     
                     boite->tab_disjoncteurs[i][j]->demande_du_circuit = 0;
 
@@ -292,4 +297,126 @@ void recuperer_boite(t_boite* boite){
         //Laisse le temps de voir le message.
         getch();
     }
+}
+
+
+
+///////////////////////////////////////////////////////////////
+//Modif Seb
+/////////////////////////////////////////////////////////////////
+void* vider_boite(t_boite* boite){
+/*Stratégie : on parcourt le tableau de disjoncteurs, s'il y en a un 
+* à la case actuelle, on le supprime en appelant le sous-programme
+* retirer_disjoncteur.
+*/
+
+	//itérateurs
+	int L;
+	int C;
+
+
+	for (L = 0; L < NB_LIGNES_MAX; L++) {
+
+		for (C = 0; C < NB_COLONNES; C++) {
+
+			if (boite->tab_disjoncteurs[L][C]) {
+
+				retirer_disjoncteur(boite);
+
+			}
+		}
+	}
+return EXIT_SUCCESS;
+}
+
+void*ajouter_des_appareils(t_boite* boite){
+	//à écrire
+return EXIT_SUCCESS;
+}
+void*afficher_appareils(t_boite* boite){
+	//à écrire
+return EXIT_SUCCESS;
+}
+void*retirer_appareil(t_boite* boite){
+	//à écrire
+return EXIT_SUCCESS;
+}
+void*suggerer_disjoncteurs(t_boite* boite){
+	//à écrire
+return EXIT_SUCCESS;
+}
+void*defaire_retraits(t_boite* boite){
+	//à écrire
+return EXIT_SUCCESS;
+}
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Demande les coordonnées du disjoncteur et affiche les informations
+//sur les appareils qu'il contient
+void afficher_les_appareils_un_disjoncteur(t_boite* boite) {
+
+	/*Stratégie :
+	* On lit des coordonnées valides avec obtenir_position_valide
+	*
+	* pour pouvoir les afficher, les appareils doivent être dans un tableau
+	* et pas sous forme de liste : on convertit la liste en tableau
+	*
+	* On affiche enfin le tableau d'appareils
+	*/
+
+	t_coord coord;
+
+	int nb_appareils;
+
+	char* mess = "Quel disjoncteur ?";
+
+
+	cleardevice();
+
+
+	//Message de sollicitation
+
+	boite_message(mess,
+		DIALOGUE_X, DIALOGUE_Y,
+		textwidth(mess), textheight(mess),
+		WHITE, WHITE);
+
+	//on remplit coord avec les coordonnées valides
+	obtenir_position_valide(DIALOGUE_X, DIALOGUE_Y + GAP_Y,
+		&(coord.col), &(coord.lig),
+		HAUT_CENTRE);
+
+
+	//si l'utilisateur n'a pas annulé
+	if (coord.col != INT_MIN && coord.lig != INT_MIN) {
+
+		//affichage des appareils
+		afficher_les_appareils(
+
+			//Conversion de la liste en tableau d'appareils
+			obtenir_appareils(boite->tab_disjoncteurs[coord.lig][coord.col], &nb_appareils),
+
+			//nombre d'appareils, modifié à sa bonne valeur par l'appel d'obtenir_appareils
+			nb_appareils);
+
+	}
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Demande un ampérage et affiche les disjoncteurs qui peuvent supporter
+//le branchement d'un appareil de cet ampérage
+void suggerer_circuit(t_boite* boite) {
+
+
+
 }

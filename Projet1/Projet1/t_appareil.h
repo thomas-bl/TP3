@@ -11,7 +11,7 @@
 
 //contient toutes les constantes utiles
 #include "types_et_constantes_globaux.h"
-
+#include <string.h>
 
 
 //-------------------------DEFINITION DES CONSTANTES-------------------
